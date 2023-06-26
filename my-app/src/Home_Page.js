@@ -25,5 +25,4 @@ function Home_Page() {
     </React.Fragment>
   );
 }
-
 export default Home_Page;
