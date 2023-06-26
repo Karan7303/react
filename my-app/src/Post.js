@@ -7,9 +7,20 @@ function Post() {
   return (
     <React.Fragment>
       <Navbar />
-      <Grid container spacing={2}>
+      <Box
+          sx={{
+            mt: 8,
+            bgcolor:'blue',
+            width:'150',
+            height:'120',
+            display: 'flex',
+            flexDirection: 'column',
+            alignItems: 'center',
+          }}
+        >
         Create a Post
-      </Grid>
+      
+      </Box>
     </React.Fragment>
   );
 }

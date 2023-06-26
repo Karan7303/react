@@ -12,11 +12,15 @@ import Button from '@mui/material/Button';
 import Tooltip from '@mui/material/Tooltip';
 import MenuItem from '@mui/material/MenuItem';
 import AdbIcon from '@mui/icons-material/Adb';
+import { useNavigate } from 'react-router-dom';
 
-const pages = ['Products', 'Pricing', 'Blog'];
+
+const pages = ['Create Post', 'My Profile', 'Notifications'];
 const settings = ['Profile', 'Account', 'Dashboard', 'Logout'];
 
 function Navbar() {
+  const navigate = useNavigate();
+
   const [anchorElNav, setAnchorElNav] = React.useState(null);
   const [anchorElUser, setAnchorElUser] = React.useState(null);
 
@@ -29,10 +33,14 @@ function Navbar() {
 
   const handleCloseNavMenu = () => {
     setAnchorElNav(null);
+    //navigate("/" + page);
+    navigate('/Post');
+console.log("sda")
   };
 
   const handleCloseUserMenu = () => {
     setAnchorElUser(null);
+    
   };
 
   return (
@@ -88,7 +96,7 @@ function Navbar() {
               }}
             >
               {pages.map((page) => (
-                <MenuItem key={page} onClick={handleCloseNavMenu}>
+                <MenuItem key={page} onClick={()=>handleCloseNavMenu()}>
                   <Typography textAlign="center">{page}</Typography>
                 </MenuItem>
               ))}
