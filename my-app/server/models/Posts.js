@@ -10,7 +10,7 @@ const PostSchema = new mongoose.Schema(
     },
     pictureUpload: {
       type: String,
-      default: "no upload",
+      default: null,
     },
     user: {
       require: true,

@@ -2,19 +2,16 @@ import express from "express";
 import mongoose from "mongoose";
 import bodyParser from "body-parser";
 import dotenv from "dotenv";
-import multer from "multer";
 import helmet from "helmet";
 import morgan from "morgan";
-import path from "path";
 import cors from "cors";
 import { register } from "./controllers/auth.js";
-
 import authRoutes from "./routes/auth.js";
 import userRoutes from "./routes/user.js";
-
 import { fileURLToPath } from "url";
+import multer from "multer";
+import path from "path";
 
-//Configurations
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
@@ -24,27 +21,30 @@ app.use(express.json());
 app.use(helmet());
 app.use(helmet.crossOriginResourcePolicy({ policy: "cross-origin" }));
 app.use(morgan("common"));
-app.use(bodyParser.urlencoded({ extended: true }));
-app.use(bodyParser.json());
+app.use(bodyParser.json({ limit: "30mb", extended: true }));
+app.use(bodyParser.urlencoded({ limit: "30mb", extended: true }));
 app.use(cors());
-app.use("/assets", express.static(path.join(__dirname, "public/assets/")));
 
+app.use("/assets/", express.static(path.join(__dirname, "public/assets/")));
+
+/* FILE STORAGE */
 const storage = multer.diskStorage({
+  
   destination: function (req, file, cb) {
     cb(null, "public/assets/");
   },
   filename: function (req, file, cb) {
-    cb(null, file.originalname);
+    cb(null, Date.now()+file.originalname);
   },
 });
+
 const upload = multer({ storage });
 
-//Routes with Files
-app.post("/Signup", upload.single("picture"), register);
+app.post("/Signup", upload.single('pictureFile'), register);
 
 //Routes
 app.use("/auth", authRoutes);
-app.use("/user",userRoutes)
+app.use("/user", userRoutes);
 
 //Mongoose Connection
 const PORT = process.env.PORT;

@@ -16,17 +16,19 @@ function HomePage_Post() {
   const handleSubmit = (event) => {
     event.preventDefault();
     var text = document.getElementById("postText").value;
+    var pictureName = document.getElementsByName("picture")[0].value
     console.log(text);
     axios
       .post(
         "http://localhost:3001/user/userPosts",
         {
           userContent: text,
-          user: "karan",
+          user:sessionStorage.getItem("Authorization"),
+          pictureUpload:pictureName===""? null:pictureName
         },
         {
           headers: {
-            'Authorization':sessionStorage.getItem("Authorization"),
+            Authorization: sessionStorage.getItem("Authorization"),
           },
         }
       )
@@ -60,9 +62,13 @@ function HomePage_Post() {
       </Box> */}
       <Box component="form" onSubmit={handleSubmit}>
         <TextField id="postText" sx={{ bgcolor: "white" }} fullWidth />
-        <Box sx={{ m: 0, p: 1, bgcolor: "whitesmoke" }} >
-          <Button> Attach</Button>
-          <Button type="submit"> Post</Button>
+        <Box sx={{ m: 0, p: 1, bgcolor: "whitesmoke" }}>
+          <Button variant="contained" component="label" >
+            {" "}
+            Attach
+            <input name="picture" hidden accept="image/*" type="file" />
+          </Button>
+          <Button variant="contained" type="submit"> Post</Button>
         </Box>
       </Box>
 

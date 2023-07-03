@@ -44,6 +44,7 @@ export default function Signup() {
     const _lastName = data.get("L_Name");
     const _dtob = data.get("dob");
     const _picture = data.get("picture").name;
+    const _pictureFile = data.get("picture");
     axios
       .post(
         "http://localhost:3001/Signup",
@@ -54,6 +55,7 @@ export default function Signup() {
           lastname: _lastName,
           date: _dtob,
           picture: _picture,
+          pictureFile: _pictureFile,
         },
         { headers: { "Content-Type": "multipart/form-data" } }
       )
@@ -61,7 +63,7 @@ export default function Signup() {
         console.log(response);
       })
       .catch(function (error) {
-        console.log(error);
+        console.log(error.response.data);
       });
   };
   return (
@@ -135,13 +137,7 @@ export default function Signup() {
             <br />
             <Button variant="contained" component="label">
               Upload
-              <input
-                name="picture"
-                hidden
-                accept="image/*"
-              
-                type="file"
-              />
+              <input name="picture" hidden accept="image/*" type="file" />
             </Button>
             <br></br>
             <FormControlLabel
@@ -158,7 +154,7 @@ export default function Signup() {
             </Button>
             <Grid container>
               <Grid item>
-                <Link href="./Login.js" variant="body2">
+                <Link href="./" variant="body2">
                   {"Already have an account? Sign in"}
                 </Link>
               </Grid>
