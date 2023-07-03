@@ -6,8 +6,15 @@ import SideBar from "./Components/HomePage_sideBar";
 import Posts from "./Components/HomePage_Post";
 import Notify from "./Components/HomePage_Notify";
 import Grid from "@mui/material/Grid";
-import React from "react";
+import React, { useEffect } from "react";
+import { useNavigate } from "react-router-dom";
+
 function Home_Page() {
+  const navigate = useNavigate();
+  useEffect(() => {
+    if (sessionStorage.getItem("isLoggedIn") !== "true") navigate("/");
+  });
+
   return (
     <React.Fragment>
       <Navbar />

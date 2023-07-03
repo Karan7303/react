@@ -27,13 +27,18 @@ export const login = async (req, res) => {
   try {
     const { email, password } = req.body;
     const user = await User.findOne({ email: email });
-    if (!user) return res.send({ msg: "User does not exist" });
-    const matchPass = bcrypt.compare(password, user.password);
-    if (!matchPass) return res.send({ msg: "Wrong Password!!!!" });
 
-    const token = jwt.sign({ id: user._id }, process.env.JWT_SECRET);
-    delete user.password;
-    res.send(200).json(token, user);
+    if (!user) return res.send({ msg: "User does not exist" ,match:false});
+
+    bcrypt.compare(password, user.password).then((match, err) => {
+      if (err) return res.send(err);
+      if (match) {
+        const token = jwt.sign({ id: user._id }, process.env.JWT_SECRET);
+        delete user.password;
+        return res
+          .send({ token: token, user: user, match:match,msg: "Correct passowrd!!!" });
+      } else return res.send({ msg: "Wrong Password!!!!",match:match });
+    });
   } catch (error) {
     res.send(error);
   }

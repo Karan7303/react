@@ -7,11 +7,12 @@ import helmet from "helmet";
 import morgan from "morgan";
 import path from "path";
 import cors from "cors";
-import {register} from './controllers/auth.js'
-import {login} from './controllers/auth.js'
+import { register } from "./controllers/auth.js";
+
+import authRoutes from "./routes/auth.js";
+import userRoutes from "./routes/user.js";
 
 import { fileURLToPath } from "url";
-
 
 //Configurations
 const __filename = fileURLToPath(import.meta.url);
@@ -38,14 +39,12 @@ const storage = multer.diskStorage({
 });
 const upload = multer({ storage });
 
-
 //Routes with Files
-app.post('/Signup',upload.single('picture'),register)
-app.post('/Login',login)
-// app.post('/Signup',(req,res)=>{
-//   console.log(req.body);
-// })
+app.post("/Signup", upload.single("picture"), register);
 
+//Routes
+app.use("/auth", authRoutes);
+app.use("/user",userRoutes)
 
 //Mongoose Connection
 const PORT = process.env.PORT;
