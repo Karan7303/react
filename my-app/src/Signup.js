@@ -51,8 +51,8 @@ export default function Signup() {
         {
           email: _email,
           password: _password,
-          firstname: _firstName,
-          lastname: _lastName,
+          firstName: _firstName,
+          lastName: _lastName,
           date: _dtob,
           picture: _picture,
           pictureFile: _pictureFile,

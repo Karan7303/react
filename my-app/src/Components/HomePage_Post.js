@@ -1,139 +1,100 @@
-import {
-  Box,
-  Avatar,
-  Container,
-  Button,
-  Input,
-  FormControl,
-} from "@mui/material";
+import { Box, Avatar, Container, Button } from "@mui/material";
 import Stack from "@mui/material/Stack";
 import TextField from "@mui/material/TextField";
-import TextareaAutosize from "@mui/base/TextareaAutosize";
 import axios from "axios";
+import Typography from "@mui/material/Typography";
 import "../App.css";
+import { useEffect, useState } from "react";
+import ThumbUpAltIcon from "@mui/icons-material/ThumbUpAlt";
+import CommentIcon from "@mui/icons-material/Comment";
 
 function HomePage_Post() {
-  const handleSubmit = (event) => {
-    event.preventDefault();
-    var text = document.getElementById("postText").value;
-    var pictureName = document.getElementsByName("picture")[0].value
-    console.log(text);
-    axios
-      .post(
-        "http://localhost:3001/user/userPosts",
-        {
-          userContent: text,
-          user:sessionStorage.getItem("Authorization"),
-          pictureUpload:pictureName===""? null:pictureName
-        },
-        {
-          headers: {
-            Authorization: sessionStorage.getItem("Authorization"),
-          },
-        }
-      )
-      .then(function (response) {
-        console.log(response.data);
-      });
-  };
-  return (
-    <Container
-      sx={{
-        bgcolor: "lightgreen",
-        minwidth: 300,
-        p: 1,
-        m: 2,
-      }}
-    >
-      {/* <Box
-        sx={{
-          mt: 1,
-          ml: 2,
-          bgcolor: "white",
-          width: 810,
-          display: "flex",
-          flexDirection: "column",
-          alignItems: "center",
-        }}
-      >
-        <TextField fullWidth />
-        <Button> Post</Button>
-        <Button> Attach</Button>
-      </Box> */}
-      <Box component="form" onSubmit={handleSubmit}>
-        <TextField id="postText" sx={{ bgcolor: "white" }} fullWidth />
-        <Box sx={{ m: 0, p: 1, bgcolor: "whitesmoke" }}>
-          <Button variant="contained" component="label" >
-            {" "}
-            Attach
-            <input name="picture" hidden accept="image/*" type="file" />
-          </Button>
-          <Button variant="contained" type="submit"> Post</Button>
-        </Box>
-      </Box>
+  const [postData, setpostData] = useState(null);
 
-      <Box sx={{ bgcolor: "blue", padding: 3, m: 2, mr: 10 }}>
-        <Stack direction={"row"} spacing={2}>
-          <Avatar alt="Remy Sharp" src="default.png" xs="1" />
-          <Box component={"span"}> First Name Last Name</Box>
-        </Stack>
-        <Box>
-          y's standard dummy text ever since the 1500s, when an unknown printer
-          took a galley of type and scrambled it to make a type specimen book.
-          It has survived not only five centuries, but also the leap into
-          electronic typesetting, remaining essentially unchanged. It was
-          popularised in the 1960s with the release of Letraset sheets
-          containing Lorem Ipsum passages, and more recently with desktop
-          publishing software like Aldus PageMaker including versions of Lorem
-          Ipsum.
-        </Box>
-        <Stack direction={"row"}>
-          <Button color="secondary" variant="contained">
-            {" "}
-            Like{" "}
-          </Button>
-          <Button color="secondary" variant="contained">
-            {" "}
-            Comment{" "}
-          </Button>
-          <Button color="secondary" variant="contained">
-            {" "}
-            Share{" "}
-          </Button>
-        </Stack>
+  useEffect(() => {
+    axios
+      .get("http://localhost:3001/post", {
+        headers: {
+          Authorization: sessionStorage.getItem("Authorization"),
+        },
+      })
+      .then(function (response) {
+        setpostData(response);
+      })
+      .catch(function (error) {
+        console.log(error.response);
+      });
+  }, []);
+  const updateLike = (event)=>{
+    axios
+    .get("http://localhost:3001/post/:id", {
+      headers: {
+        Authorization: sessionStorage.getItem("Authorization"),
+      },
+    })
+    .then(function (response) {
+      setpostData(response);
+    })
+    .catch(function (error) {
+      console.log(error.response);
+    });
+
+  }
+  return (
+    postData !== null && (
+      <Box component="div" id="container">
+        {postData.data.post.map(function (item, i) {
+          return (
+            <Box
+              key={i}
+              //id="homePagepost"
+              sx={{
+                bgcolor: "aliceblue",
+                border: "solid .0125em black",
+                boxShadow:
+                  "2px 2px 5px aliceblue,2px 2px 17px black,2px 2px 25px aliceblue",
+                p: 1,
+                m: 2,
+                mr: 3,
+              }}
+              className="homePagepost1"
+            >
+              <Stack direction={"row"} spacing={1}>
+                <Avatar
+                  alt="Remy Sharp"
+                  src={"http://localhost:3001/assets/" + item.userPicturePath}
+                  xm="5"
+                />
+                <Box sx={{ bgcolor: "red" }} component={"span"}>
+                  <Typography variant="h5">
+                    {item.firstName} {item.lastName}
+                  </Typography>
+                </Box>
+              </Stack>
+              {item.picturePath !== null && (
+                <Box
+                  component="img"
+                  sx={{ width: "500px", height: "500px", ml: 6 }}
+                  src={"http://localhost:3001/assets/" + item.picturePath}
+                ></Box>
+              )}
+              <Box id="userContent" sx={{ bgcolor: "aliceblue", ml: 6, mt: 2 }}>
+                {item.userContent}
+              </Box>
+              <Stack direction={"row"} sx={{ ml: 6, mt: 1 }}spacing={2}>
+                <Button color="primary" variant="contained">
+                  <ThumbUpAltIcon color="" />
+                </Button>
+                <Button color="secondary" variant="contained">
+                  <CommentIcon />
+                </Button>
+              </Stack>
+            </Box>
+          );
+        })}
       </Box>
-      <Box sx={{ bgcolor: "blue", padding: 3, m: 2, mr: 10 }}>
-        <Stack direction={"row"} spacing={2}>
-          <Avatar alt="Remy Sharp" src="default.png" xs="1" />
-          <Box component={"span"}> First Name Last Name</Box>
-        </Stack>
-        <Box>
-          Lorem Ipsum is simply dummy text of the printing and typesetting
-          industry. Lorem Ipsum has been the industry's standard dummy text ever
-          since the 1500s, when an unknown printer took a galley of type and
-          scrambled it to make a type specimen book. It has survived not only
-          five centuries, but also the leap into electronic typesetting,
-          remaining essentially unchanged. It was popularised in the 1960s with
-          the release of Letraset sheets containing Lorem Ipsum passages, and
-          more recently with desktop publishing software like Aldus PageMaker
-          including versions of Lorem Ipsum.
-        </Box>
-        <Stack direction={"row"}>
-          <Button color="secondary" variant="contained">
-            {" "}
-            Like{" "}
-          </Button>
-          <Button color="secondary" variant="contained">
-            {" "}
-            Comment{" "}
-          </Button>
-          <Button color="secondary" variant="contained">
-            {" "}
-            Share{" "}
-          </Button>
-        </Stack>
-      </Box>
-    </Container>
+    )
   );
 }
+
 export default HomePage_Post;

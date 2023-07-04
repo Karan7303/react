@@ -32,6 +32,7 @@
   from {
     transform: rotate(0deg);
   }
+
   to {
     transform: rotate(360deg);
   }
@@ -39,7 +40,15 @@
 
 
 /* Homepage textarea */
-.postContent{
+.postContent {}
 
-
+#homePagepost {
+  background-color: aliceblue;
+  padding: 3;
+  margin: 2;
+  margin-left: 3;
+  border: solid 1.5em rgba(#000, .03);
+  box-shadow: 2px 2px 5px rgba(#000, .2),
+    2px 2px 17px rgba(#000, .35),
+    2px 2px 25px rgba(#000, .5);
 }

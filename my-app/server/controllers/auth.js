@@ -4,13 +4,13 @@ import User from "../models/User.js";
 
 export const register = async (req, res) => {
   try {
-    const { firstname, lastname, email, password, picture, date, friends } =
+    const { firstName, lastName, email, password, picture, date, friends } =
       req.body;
     const salt = await bcrypt.genSalt();
     const PasswordHash = await bcrypt.hash(password, salt);
     const newUser = new User({
-      firstname,
-      lastname,
+      firstName,
+      lastName,
       email,
       password: PasswordHash,
       picture,

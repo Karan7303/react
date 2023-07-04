@@ -8,9 +8,13 @@ import cors from "cors";
 import { register } from "./controllers/auth.js";
 import authRoutes from "./routes/auth.js";
 import userRoutes from "./routes/user.js";
+import postRoutes  from './routes/post.js'
+import { createPost } from "./controllers/post.js";
+
 import { fileURLToPath } from "url";
 import multer from "multer";
 import path from "path";
+import { verifytoken } from "./middleware/auth.js";
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
@@ -34,17 +38,20 @@ const storage = multer.diskStorage({
     cb(null, "public/assets/");
   },
   filename: function (req, file, cb) {
-    cb(null, Date.now()+file.originalname);
+    cb(null, file.originalname);
   },
 });
 
 const upload = multer({ storage });
 
 app.post("/Signup", upload.single('pictureFile'), register);
+app.post("/post",upload.single('pictureFile'),verifytoken,createPost)
 
 //Routes
 app.use("/auth", authRoutes);
 app.use("/user", userRoutes);
+app.use("/post", postRoutes);
+
 
 //Mongoose Connection
 const PORT = process.env.PORT;

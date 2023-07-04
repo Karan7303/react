@@ -58,7 +58,7 @@ function HomePage_sidebar() {
             <ListItem
               secondaryAction={
                 <IconButton edge="end" aria-label="delete" id="Username">
-                  {Data.firstname}
+                  {Data.firstName}
                 </IconButton>
               }
             >
