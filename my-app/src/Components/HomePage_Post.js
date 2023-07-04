@@ -7,6 +7,7 @@ import "../App.css";
 import { useEffect, useState } from "react";
 import ThumbUpAltIcon from "@mui/icons-material/ThumbUpAlt";
 import CommentIcon from "@mui/icons-material/Comment";
+import { PostLike } from "./PostLike";
 
 function HomePage_Post() {
   const [postData, setpostData] = useState(null);
@@ -82,7 +83,7 @@ function HomePage_Post() {
                 {item.userContent}
               </Box>
               <Stack direction={"row"} sx={{ ml: 6, mt: 1 }}spacing={2}>
-                <Button color="primary" variant="contained">
+                <Button color="primary" variant="contained" onClick={PostLike(item._id)}>
                   <ThumbUpAltIcon color="" />
                 </Button>
                 <Button color="secondary" variant="contained">

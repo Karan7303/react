@@ -8,7 +8,7 @@ import Notify from "./Components/HomePage_Notify";
 import Grid from "@mui/material/Grid";
 import React, { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
-import HomePage_Form from "./Components/HomePage_Form";
+import HForm from "./Components/HomePage_Form";
 function Home_Page() {
   const navigate = useNavigate();
   useEffect(() => {
@@ -23,7 +23,7 @@ function Home_Page() {
           <SideBar />
         </Grid>
         <Grid item xs={6}>
-          <HomePage_Form />
+          <HForm/>
           <Posts />
         </Grid>
         <Grid item xs={3}>
