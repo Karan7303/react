@@ -1,14 +1,14 @@
 //import { Grid } from '@mui/material';
 import { Box } from "@mui/material";
 import "./App.css";
-import Navbar from "./Components/Navbar";
-import SideBar from "./Components/HomePage_sideBar";
-import Posts from "./Components/HomePage_Post";
-import Notify from "./Components/HomePage_Notify";
+import Navbar from "./Sections/Navbar";
+import SideBar from "./Sections/HomePage_sideBar";
+import Posts from "./Sections/HomePage_Post";
+import Notify from "./Sections/HomePage_Notify";
 import Grid from "@mui/material/Grid";
 import React, { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
-import HForm from "./Components/HomePage_Form";
+import HForm from "./Sections/HomePage_Form";
 function Home_Page() {
   const navigate = useNavigate();
   useEffect(() => {

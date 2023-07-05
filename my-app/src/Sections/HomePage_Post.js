@@ -1,13 +1,11 @@
-import { Box, Avatar, Container, Button } from "@mui/material";
+import { Box, Avatar, Button } from "@mui/material";
 import Stack from "@mui/material/Stack";
-import TextField from "@mui/material/TextField";
 import axios from "axios";
 import Typography from "@mui/material/Typography";
 import "../App.css";
 import { useEffect, useState } from "react";
 import ThumbUpAltIcon from "@mui/icons-material/ThumbUpAlt";
 import CommentIcon from "@mui/icons-material/Comment";
-import { PostLike } from "./PostLike";
 
 function HomePage_Post() {
   const [postData, setpostData] = useState(null);
@@ -26,21 +24,24 @@ function HomePage_Post() {
         console.log(error.response);
       });
   }, []);
-  const updateLike = (event)=>{
+  const updateLike = (p_id) => {
     axios
-    .get("http://localhost:3001/post/:id", {
-      headers: {
-        Authorization: sessionStorage.getItem("Authorization"),
-      },
-    })
-    .then(function (response) {
-      setpostData(response);
-    })
-    .catch(function (error) {
-      console.log(error.response);
-    });
-
-  }
+      .patch(
+        "http://localhost:3001/post/id",
+        {
+          params: { postID: p_id },
+        },
+        {
+          headers: {
+            Authorization: sessionStorage.getItem("Authorization"),
+          },
+        }
+      )
+      .then(function (response) {})
+      .catch(function (error) {
+        console.log(error.response);
+      });
+  };
   return (
     postData !== null && (
       <Box component="div" id="container">
@@ -82,8 +83,15 @@ function HomePage_Post() {
               <Box id="userContent" sx={{ bgcolor: "aliceblue", ml: 6, mt: 2 }}>
                 {item.userContent}
               </Box>
-              <Stack direction={"row"} sx={{ ml: 6, mt: 1 }}spacing={2}>
-                <Button color="primary" variant="contained" onClick={PostLike(item._id)}>
+              <Stack direction={"row"} sx={{ ml: 6, mt: 1 }} spacing={2}>
+                <Button
+                  color="primary"
+                  variant="contained"
+                  onClick={() => {
+                    updateLike(item._id);
+                  }}
+                >
+                  {Object.keys(item.likes).length}
                   <ThumbUpAltIcon color="" />
                 </Button>
                 <Button color="secondary" variant="contained">

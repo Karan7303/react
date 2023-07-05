@@ -1,6 +1,6 @@
 import { Box } from "@mui/material";
 import "./App.css";
-import Navbar from "./Components/Navbar";
+import Navbar from "./Sections/Navbar";
 import Grid from "@mui/material/Grid";
 import React from "react";
 function Post() {
