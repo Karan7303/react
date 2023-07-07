@@ -7,28 +7,29 @@ import Divider from "@mui/material/Divider";
 import { alignProperty } from "@mui/material/styles/cssUtils";
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { useSelector, useDispatch } from "react-redux";
+
 import axios from "axios";
 
 function HomePage_sidebar() {
-  const [Data, setData] = useState(null);
-  useEffect(() => {
-    //axios.get('user/:'+sessionStorage.getItem('Authorization'))
-    axios
-      .get("http://localhost:3001/user/id", {
-        headers: {
-          Authorization: sessionStorage.getItem("Authorization"),
-        },
-      })
-      .then(function (response) {
-        setData(response.data.user);
+  const loggedInUser = useSelector((state) => state.user);
 
-        // document.getElementById('Username').innerHTML=response.data.user.firstname
-        // document.getElementById('userEmail').innerHTML=response.data.user.email
-        // document.getElementById('profileP').src=response.data.user.picture
-      });
-  }, []);
+  // const [Data, setData] = useState(null);
+  // useEffect(() => {
+  //   //axios.get('user/:'+sessionStorage.getItem('Authorization'))
+  //   axios
+  //     .get("http://localhost:3001/user/id", {
+  //       headers: {
+  //         Authorization: "Bearer " + token,
+  //       },
+  //     })
+  //     .then(function (response) {
+  //       setData(response.data.user);
+
+  //     });
+  // }, []);
   return (
-    Data !== null && (
+    loggedInUser !== null && (
       <Box
         sx={{
           bgcolor: "lightblue",
@@ -47,7 +48,7 @@ function HomePage_sidebar() {
           <Avatar
             alt="Remy Sharp"
             id="profileP"
-            src={"http://localhost:3001/assets/" + Data.picture}
+            src={"http://localhost:3001/assets/" + loggedInUser.picture}
             sx={{ margin: 2, height: 120, width: 120 }}
           />
         </Box>
@@ -58,7 +59,7 @@ function HomePage_sidebar() {
             <ListItem
               secondaryAction={
                 <IconButton edge="end" aria-label="delete" id="Username">
-                  {Data.firstName}
+                  {loggedInUser.firstName}
                 </IconButton>
               }
             >
@@ -68,7 +69,7 @@ function HomePage_sidebar() {
             <ListItem
               secondaryAction={
                 <IconButton edge="end" aria-label="delete" id="userEmail">
-                  {Data.email}
+                  {loggedInUser.email}
                 </IconButton>
               }
             >

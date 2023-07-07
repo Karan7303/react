@@ -12,9 +12,12 @@ import Box from "@mui/material/Box";
 import LockOutlinedIcon from "@mui/icons-material/LockOutlined";
 import Typography from "@mui/material/Typography";
 import Container from "@mui/material/Container";
+import { setLoginUser } from "./state/slice";
+import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
 import axios from "axios";
+
 var errorThrow = false;
 function Copyright(props) {
   return (
@@ -40,6 +43,7 @@ const defaultTheme = createTheme();
 
 export default function SignIn() {
   const navigate = useNavigate();
+  const dispatch = useDispatch();
 
   const handleSubmit = (event) => {
     event.preventDefault();
@@ -52,12 +56,14 @@ export default function SignIn() {
         password: _password,
       })
       .then(function (response) {
-
         if (response.data.match === true) {
-          sessionStorage.setItem("Authorization","Bearer "+response.data.token)
-          sessionStorage.setItem("isLoggedIn","true")
-          navigate("/home")
-        };
+       
+          dispatch(setLoginUser({
+            user:response.data.user,
+            token:response.data.token
+          }))
+          navigate("/home");
+        }
         if (response.data.match === false) {
           document.getElementById("Alert1").innerHTML = response.data.msg;
         }

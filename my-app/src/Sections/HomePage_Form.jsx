@@ -1,7 +1,11 @@
 import axios from "axios";
 import { Box, TextField, Button } from "@mui/material";
 import "../App.css";
+import { useDispatch, useSelector } from "react-redux";
+import { setPosts } from "../state/slice";
 function HomePage_Form() {
+  const dispatch = useDispatch();
+  const token = useSelector((state) => state.token);
   const handleSubmit = (event) => {
     event.preventDefault();
     const data = new FormData(event.currentTarget);
@@ -9,6 +13,7 @@ function HomePage_Form() {
     const _pictureFile = data.get("picture");
     var text = data.get("postText");
     var pictureName = data.get("picture").name;
+    
     axios
       .post(
         "http://localhost:3001/post",
@@ -19,13 +24,15 @@ function HomePage_Form() {
         },
         {
           headers: {
-            Authorization: sessionStorage.getItem("Authorization"),
+            Authorization: "Bearer " + token,
             "Content-Type": "multipart/form-data",
           },
         }
       )
       .then(function (response) {
-        console.log(response.data);
+        
+        const data = response.data;
+        dispatch(setPosts({ posts: data }));
       })
       .catch(function (error) {
         console.log(error);

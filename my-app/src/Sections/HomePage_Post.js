@@ -1,24 +1,30 @@
 import { Box, Avatar, Button } from "@mui/material";
+import PersonAddIcon from "@mui/icons-material/PersonAdd";
 import Stack from "@mui/material/Stack";
 import axios from "axios";
 import Typography from "@mui/material/Typography";
+import ThumbDownIcon from "@mui/icons-material/ThumbDown";
 import "../App.css";
 import { useEffect, useState } from "react";
 import ThumbUpAltIcon from "@mui/icons-material/ThumbUpAlt";
 import CommentIcon from "@mui/icons-material/Comment";
+import { useSelector, useDispatch } from "react-redux";
+import { setPosts, setPost, setLoginUser, setFriends } from "../state/slice";
 
-function HomePage_Post() {
-  const [postData, setpostData] = useState(null);
-
+function HomePage_Post({ userID }) {
+  const postData = useSelector((state) => state.posts);
+  const token = useSelector((state) => state.token);
+  const dispatch = useDispatch();
   useEffect(() => {
     axios
       .get("http://localhost:3001/post", {
         headers: {
-          Authorization: sessionStorage.getItem("Authorization"),
+          Authorization: "Bearer " + token,
         },
       })
       .then(function (response) {
-        setpostData(response);
+        const data = response.data.post;
+        dispatch(setPosts({ posts: data }));
       })
       .catch(function (error) {
         console.log(error.response);
@@ -33,26 +39,48 @@ function HomePage_Post() {
         },
         {
           headers: {
-            Authorization: sessionStorage.getItem("Authorization"),
+            Authorization: "Bearer " + token,
           },
         }
       )
-      .then(function (response) {})
+      .then(function (response) {
+        const _post = response.data;
+        dispatch(setPost({ post: _post }));
+      })
       .catch(function (error) {
-        console.log(error.response);
+        console.log(error);
+      });
+  };
+  const addOrremove = (friendId) => {
+    axios
+      .patch(
+        "http://localhost:3001/user/addOrRemove",
+        {
+          params: { friendId: friendId },
+        },
+        {
+          headers: {
+            Authorization: "Bearer " + token,
+          },
+        }
+      )
+      .then(function (response) {
+        const _user = response.data.friends;
+        dispatch(setFriends({ friends: _user }));
+      })
+      .catch(function (error) {
+        console.log(error);
       });
   };
   return (
     postData !== null && (
       <Box component="div" id="container">
-        {postData.data.post.map(function (item, i) {
+        {postData.map(function (item, i) {
           return (
             <Box
               key={i}
-              //id="homePagepost"
               sx={{
                 bgcolor: "aliceblue",
-                border: "solid .0125em black",
                 boxShadow:
                   "2px 2px 5px aliceblue,2px 2px 17px black,2px 2px 25px aliceblue",
                 p: 1,
@@ -67,11 +95,18 @@ function HomePage_Post() {
                   src={"http://localhost:3001/assets/" + item.userPicturePath}
                   xm="5"
                 />
-                <Box sx={{ bgcolor: "red" }} component={"span"}>
+                <Box sx={{ bgcolor: "" }} component={"span"}>
                   <Typography variant="h5">
                     {item.firstName} {item.lastName}
                   </Typography>
                 </Box>
+                {item.userId !== userID ? (
+                  <Button onClick={()=>{
+                    addOrremove(item.userId)
+                  }}>
+                    <PersonAddIcon sx={{ ml: 42, pl: 20 }} />
+                  </Button>
+                ) : null}
               </Stack>
               {item.picturePath !== null && (
                 <Box
@@ -91,8 +126,12 @@ function HomePage_Post() {
                     updateLike(item._id);
                   }}
                 >
-                  {Object.keys(item.likes).length}
-                  <ThumbUpAltIcon color="" />
+                  <Typography variant="h5">{Object.keys(item.likes).length}</Typography>
+                  {item.likes[userID] ? (
+                    <ThumbDownIcon />
+                  ) : (
+                    <ThumbUpAltIcon color="" />
+                  )}
                 </Button>
                 <Button color="secondary" variant="contained">
                   <CommentIcon />
