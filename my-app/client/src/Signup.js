@@ -47,7 +47,7 @@ export default function Signup() {
     const _pictureFile = data.get("picture");
     axios
       .post(
-        "http://localhost:3001/Signup",
+        "https://test-9o0j.onrender.com/Signup",
         {
           email: _email,
           password: _password,

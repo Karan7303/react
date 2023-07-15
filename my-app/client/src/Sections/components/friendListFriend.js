@@ -8,7 +8,7 @@ function FriendListFriend({ friend }) {
   const [listedUser, setlistedUser] = useState(null);
   useEffect(() => {
     axios
-      .get("http://localhost:3001/user/" + friend, {
+      .get("https://test-9o0j.onrender.com/user/" + friend, {
         headers: {
           Authorization: "Bearer " + token,
         },
@@ -41,7 +41,7 @@ function FriendListFriend({ friend }) {
           {" "}
           <Avatar
             alt="default.png"
-            src={"http://localhost:3001/assets/" + listedUser.picture}
+            src={"https://test-9o0j.onrender.com/assets/" + listedUser.picture}
             sizes=""
           />
           {" "}

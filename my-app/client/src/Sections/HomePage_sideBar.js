@@ -18,7 +18,7 @@ function HomePage_sidebar() {
   // useEffect(() => {
   //   //axios.get('user/:'+sessionStorage.getItem('Authorization'))
   //   axios
-  //     .get("http://localhost:3001/user/id", {
+  //     .get("https://test-9o0j.onrender.com/user/id", {
   //       headers: {
   //         Authorization: "Bearer " + token,
   //       },
@@ -48,7 +48,7 @@ function HomePage_sidebar() {
           <Avatar
             alt="Remy Sharp"
             id="profileP"
-            src={"http://localhost:3001/assets/" + loggedInUser.picture}
+            src={"https://test-9o0j.onrender.com/assets/" + loggedInUser.picture}
             sx={{ margin: 2, height: 120, width: 120 }}
           />
         </Box>
