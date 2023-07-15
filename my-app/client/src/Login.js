@@ -51,7 +51,7 @@ export default function SignIn() {
     const _email = data.get("email");
     const _password = data.get("password");
     axios
-      .post("https:https://test-9o0j.onrender.com/auth/login", {
+      .post("https://test-9o0j.onrender.com/auth/login", {
         email: _email,
         password: _password,
       })
