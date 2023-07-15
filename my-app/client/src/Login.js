@@ -51,7 +51,7 @@ export default function SignIn() {
     const _email = data.get("email");
     const _password = data.get("password");
     axios
-      .post("http://localhost:3001/auth/login", {
+      .post("https://localhost:3001/auth/login", {
         email: _email,
         password: _password,
       })
