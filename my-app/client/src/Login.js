@@ -1,6 +1,6 @@
 import * as React from "react";
 import Avatar from "@mui/material/Avatar";
-import { Alert } from "@mui/material";
+import { Alert, AlertTitle } from "@mui/material";
 import Button from "@mui/material/Button";
 import CssBaseline from "@mui/material/CssBaseline";
 import TextField from "@mui/material/TextField";
@@ -9,6 +9,7 @@ import Checkbox from "@mui/material/Checkbox";
 import Link from "@mui/material/Link";
 import Grid from "@mui/material/Grid";
 import Box from "@mui/material/Box";
+import { useState } from "react";
 import LockOutlinedIcon from "@mui/icons-material/LockOutlined";
 import Typography from "@mui/material/Typography";
 import Container from "@mui/material/Container";
@@ -37,19 +38,36 @@ function Copyright(props) {
   );
 }
 
-// TODO remove, this demo shouldn't need to reset the them
-
 const defaultTheme = createTheme();
 
 export default function SignIn() {
+  const [emailEntered, setemailEntered] = useState("");
+  const emailValidate = (event) => {
+    setemailEntered(event.currentTarget.value);
+    var validRegex =
+      /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/;
+      //  /^(([^<>()\[\]\.,;:\s@\"]+(\.[^<>()\[\]\.,;:\s@\"]+)*)|(\".+\"))@(([^<>()[\]\.,;:\s@\"]+\.)+[^<>()[\]\.,;:\s@\"]{2,})$/i
+
+
+    if (!emailEntered.match(validRegex)) {
+      document.getElementById("temp").hidden = false;
+
+      document.getElementById("emailAlert").innerHTML =
+        "Invalid email address!";
+    } else document.getElementById("temp").hidden = true;
+  };
+ 
   const navigate = useNavigate();
   const dispatch = useDispatch();
 
   const handleSubmit = (event) => {
     event.preventDefault();
     const data = new FormData(event.currentTarget);
+
     const _email = data.get("email");
     const _password = data.get("password");
+   
+
     axios
       .post("https://test-9o0j.onrender.com/auth/login", {
         email: _email,
@@ -57,14 +75,19 @@ export default function SignIn() {
       })
       .then(function (response) {
         if (response.data.match === true) {
-       
-          dispatch(setLoginUser({
-            user:response.data.user,
-            token:response.data.token
-          }))
+          document.getElementById("warning").hidden = true;
+
+          dispatch(
+            setLoginUser({
+              user: response.data.user,
+              token: response.data.token,
+            })
+          );
           navigate("/home");
         }
         if (response.data.match === false) {
+          document.getElementById("warning").hidden = false;
+
           document.getElementById("Alert1").innerHTML = response.data.msg;
         }
       })
@@ -92,7 +115,9 @@ export default function SignIn() {
           <Typography component="h1" variant="h5">
             Sign in
           </Typography>
-          <Alert severity="warning" id="Alert1"></Alert>
+          <span id="warning" hidden>
+            <Alert severity="warning" id="Alert1"></Alert>
+          </span>
 
           <Box
             component="form"
@@ -100,6 +125,10 @@ export default function SignIn() {
             noValidate
             sx={{ mt: 1 }}
           >
+            {" "}
+            <span id="temp">
+              <Alert severity="error" id="emailAlert" hidden></Alert>
+            </span>
             <TextField
               margin="normal"
               required
@@ -109,6 +138,7 @@ export default function SignIn() {
               name="email"
               autoComplete="email"
               autoFocus
+              onChange={(e) => emailValidate(e)}
             />
             <TextField
               margin="normal"
@@ -139,7 +169,7 @@ export default function SignIn() {
                 </Link>
               </Grid>
               <Grid item>
-                <Link href="#" variant="body2">
+                <Link href="./Signup" variant="body2">
                   {"Don't have an account? Sign Up"}
                 </Link>
               </Grid>

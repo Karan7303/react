@@ -35,6 +35,9 @@ function Copyright(props) {
 const defaultTheme = createTheme();
 
 export default function Signup() {
+  const formValidation=(e)=>{
+        console.log(e.currentTarget.id);
+  }
   const handleSubmit = (event) => {
     event.preventDefault();
     const data = new FormData(event.currentTarget);
@@ -85,6 +88,7 @@ export default function Signup() {
             component="form"
             onSubmit={handleSubmit}
             noValidate
+            //onChange={formValidation()}
             sx={{ mt: 1 }}
           >
             <TextField
