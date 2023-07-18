@@ -31,7 +31,7 @@ app.use(cors());
 
 app.use(express.static(path.join(__dirnamee,"build")))
 app.get('/*', function (req, res) {
-  res.sendFile(path.join(__dirname, 'build', 'index.html'));
+  res.sendFile(path.join(__dirnamee, 'build', 'index.html'));
 });
 app.use("/assets/", express.static(path.join(__dirnamee, "public/assets/")));
 
