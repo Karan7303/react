@@ -169,7 +169,7 @@ export default function SignIn() {
                 </Link>
               </Grid>
               <Grid item>
-                <Link href={navigate("/home")} variant="body2">
+                <Link href={navigate("/Signup")} variant="body2">
                   {"Don't have an account? Sign Up"}
                 </Link>
               </Grid>

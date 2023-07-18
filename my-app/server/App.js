@@ -30,6 +30,9 @@ app.use(bodyParser.urlencoded({ limit: "30mb", extended: true }));
 app.use(cors());
 
 app.use(express.static(path.join(__dirnamee,"build")))
+app.get('/*', function (req, res) {
+  res.sendFile(path.join(__dirname, 'build', 'index.html'));
+});
 app.use("/assets/", express.static(path.join(__dirnamee, "public/assets/")));
 
 /* FILE STORAGE */
