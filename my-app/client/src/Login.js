@@ -46,8 +46,7 @@ export default function SignIn() {
     setemailEntered(event.currentTarget.value);
     var validRegex =
       /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/;
-      //  /^(([^<>()\[\]\.,;:\s@\"]+(\.[^<>()\[\]\.,;:\s@\"]+)*)|(\".+\"))@(([^<>()[\]\.,;:\s@\"]+\.)+[^<>()[\]\.,;:\s@\"]{2,})$/i
-
+    //  /^(([^<>()\[\]\.,;:\s@\"]+(\.[^<>()\[\]\.,;:\s@\"]+)*)|(\".+\"))@(([^<>()[\]\.,;:\s@\"]+\.)+[^<>()[\]\.,;:\s@\"]{2,})$/i
 
     if (!emailEntered.match(validRegex)) {
       document.getElementById("temp").hidden = false;
@@ -56,7 +55,7 @@ export default function SignIn() {
         "Invalid email address!";
     } else document.getElementById("temp").hidden = true;
   };
- 
+
   const navigate = useNavigate();
   const dispatch = useDispatch();
 
@@ -66,7 +65,6 @@ export default function SignIn() {
 
     const _email = data.get("email");
     const _password = data.get("password");
-   
 
     axios
       .post("https://backend-z03p.onrender.com/auth/login", {
@@ -169,9 +167,9 @@ export default function SignIn() {
                 </Link>
               </Grid>
               <Grid item>
-                <Link href={navigate("/Signup")} variant="body2">
+                <button onClick={() => navigate("/Signup")} variant="body2">
                   {"Don't have an account? Sign Up"}
-                </Link>
+                </button>
               </Grid>
             </Grid>
           </Box>
