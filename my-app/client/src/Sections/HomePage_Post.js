@@ -17,7 +17,7 @@ function HomePage_Post({ userID }) {
   const dispatch = useDispatch();
   useEffect(() => {
     axios
-      .get("https://test-9o0j.onrender.com/post", {
+      .get("https://backend-z03p.onrender.com/post", {
         headers: {
           Authorization: "Bearer " + token,
         },
@@ -33,7 +33,7 @@ function HomePage_Post({ userID }) {
   const updateLike = (p_id) => {
     axios
       .patch(
-        "https://test-9o0j.onrender.com/post/id",
+        "https://backend-z03p.onrender.com/post/id",
         {
           params: { postID: p_id },
         },
@@ -54,7 +54,7 @@ function HomePage_Post({ userID }) {
   const addOrremove = (friendId) => {
     axios
       .patch(
-        "https://test-9o0j.onrender.com/user/addOrRemove",
+        "https://backend-z03p.onrender.comcom/user/addOrRemove",
         {
           params: { friendId: friendId },
         },
@@ -92,7 +92,7 @@ function HomePage_Post({ userID }) {
               <Stack direction={"row"} spacing={1}>
                 <Avatar
                   alt="Remy Sharp"
-                  src={"https://test-9o0j.onrender.com/assets/" + item.userPicturePath}
+                  src={"https://backend-z03p.onrender.com/assets/" + item.userPicturePath}
                   xm="5"
                 />
                 <Box sx={{ bgcolor: "" }} component={"span"}>
@@ -112,7 +112,7 @@ function HomePage_Post({ userID }) {
                 <Box
                   component="img"
                   sx={{ width: "500px", height: "500px", ml: 6 }}
-                  src={"https://test-9o0j.onrender.com/assets/" + item.picturePath}
+                  src={"https://backend-z03p.onrender.com/assets/" + item.picturePath}
                 ></Box>
               )}
               <Box id="userContent" sx={{ bgcolor: "aliceblue", ml: 6, mt: 2 }}>
