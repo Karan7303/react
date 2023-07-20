@@ -52,6 +52,6 @@ export const commentPost = async (req, res) => {
   const post = await Post.findById(id);
   const text = req.body.params.commentText
 
-  post.comments.insertOne(req.user.id, text);
+  post.comments.push(req.user.id, text);
   res.status(200).json(post);
 };
