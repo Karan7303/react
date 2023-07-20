@@ -44,7 +44,7 @@ export const likePost = async (req, res) => {
   res.status(200).json(updatedPost);
 };
 export const commentPost = async (req, res) => {
-  const postSelect = await Post.findOne({ _id: req.params.id });
+  const postSelect = await Post.findOne({ _id: req.body.params.postID });
   console.log(postSelect);
   res.status(200).json(postSelect)
   // const id = req.body.params.postID

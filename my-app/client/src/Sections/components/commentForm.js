@@ -1,20 +1,20 @@
 import React from "react";
 import ReactDOM from "react-dom";
-import { TextField,Button } from "@mui/material";
+import { TextField, Button } from "@mui/material";
 import { useSelector } from "react-redux";
 import axios from "axios";
 
-function CommentForm(post_id){
+function CommentForm(post_id) {
   const token = useSelector((state) => state.token);
 
-  const updateComment=(id)=>{
-    console.log(id);
+  const updateComment = (id) => {
+    console.log(token);
     axios
       .patch(
-        "https://backend-z03p.onrender.com/post/comment/"+id,
-        // {
-        //   params: { postID: p_id },
-        // },
+        "https://backend-z03p.onrender.com/post/comment/",
+        {
+          params: { postID: id.props },
+        },
         {
           headers: {
             Authorization: "Bearer " + token,
@@ -23,25 +23,30 @@ function CommentForm(post_id){
       )
       .then(function (response) {
         console.log(response);
-        
       })
       .catch(function (error) {
         console.log(error);
       });
-
   };
-    return (<form>
-        <TextField
-          style={{ marginLeft:"46px",width:"550px",margin: "15px" }}
-          type="text"
-          label="Add a Comment"
-          variant="outlined"
-          id="commentText"
-        />
-        <br />
-        <Button onClick={()=>updateComment(post_id)} variant="contained" color="primary" style={{ marginLeft:"46px"}}>
-          Comment
-        </Button>
-        </form>
-)}
+  return (
+    <form>
+      <TextField
+        style={{ marginLeft: "46px", width: "550px", margin: "15px" }}
+        type="text"
+        label="Add a Comment"
+        variant="outlined"
+        id="commentText"
+      />
+      <br />
+      <Button
+        onClick={() => updateComment(post_id)}
+        variant="contained"
+        color="primary"
+        style={{ marginLeft: "46px" }}
+      >
+        Comment
+      </Button>
+    </form>
+  );
+}
 export default CommentForm;
