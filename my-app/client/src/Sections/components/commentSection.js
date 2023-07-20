@@ -10,7 +10,7 @@ const imgLink =
 
 function CommentSection(props) {
   const token = useSelector((state) => state.token);
-  const [listedUser, setlistedUser] = useState(null);
+  const [listedUser, setlistedUser] = useState("");
   const getUser=(id)=>{
     axios
       .get("https://backend-z03p.onrender.com/user/" + id, {
@@ -31,36 +31,35 @@ function CommentSection(props) {
   return (
     <>
       {user.comments.map(function (item, i) {
-        console.log("this is "+item.userId);
-        return(console.log("dfgdfg"))
-        //getUser(item.userId)
-        // return (
-        //   <Paper
-        //     style={{ padding: "15px 15px", marginTop: 10, marginLeft: 46 }}
-        //   >
-        //     <Grid container wrap="nowrap" spacing={2}>
-        //       <Grid item>
-        //         <Avatar
-        //           alt="Remy Sharp"
-        //           src={
-        //             "https://backend-z03p.onrender.com/assets/" +
-        //             listedUser.picture
-        //           }
-        //         />
-        //       </Grid>
-        //       <Grid justifyContent="left" item xs zeroMinWidth>
-        //         <h4 style={{ margin: 0, textAlign: "left" }}>
-        //           {" "}
-        //           {listedUser.firstName} {listedUser.lastName}
-        //         </h4>
-        //         <p style={{ textAlign: "left" }}>{item.}</p>
-        //         <p style={{ textAlign: "left", color: "gray" }}>
-        //           posted 1 minute ago
-        //         </p>
-        //       </Grid>
-        //     </Grid>
-        //   </Paper>
-        // );
+        
+        getUser(item.userId)
+        return (
+          <Paper
+            style={{ padding: "5px 5px", marginTop: 10, marginLeft: 46 }}
+          >
+            <Grid container wrap="nowrap" spacing={2}>
+              <Grid item>
+                <Avatar
+                  alt="Remy Sharp"
+                  src={
+                    "https://backend-z03p.onrender.com/assets/" +
+                    listedUser.picture
+                  }
+                />
+              </Grid>
+              <Grid justifyContent="left" item xs zeroMinWidth>
+                <h4 style={{ margin: 0, textAlign: "left" }}>
+                  {" "}
+                  {listedUser.firstName} {listedUser.lastName}
+                </h4>
+                <p style={{ textAlign: "left" }}>{item.content}</p>
+                <p style={{ textAlign: "left", color: "gray" }}>
+                  posted 1 minute ago
+                </p>
+              </Grid>
+            </Grid>
+          </Paper>
+        );
       })}
     </>
   );

@@ -1,15 +1,15 @@
 import React from "react";
 import ReactDOM from "react-dom";
 import { TextField, Button } from "@mui/material";
-import { useSelector } from "react-redux";
 import axios from "axios";
+import { useSelector, useDispatch } from "react-redux";
+import { setPost } from "../../state/slice";
 
 function CommentForm(post_id) {
   const token = useSelector((state) => state.token);
-
+  const dispatch = useDispatch();
   const updateComment = (id) => {
-    var commentText = document.getElementById("commentText").value;
-    console.log(commentText);
+    var commentText = document.getElementById(post_id.props).value;
     axios
       .patch(
         "https://backend-z03p.onrender.com/post/comment/",
@@ -26,6 +26,9 @@ function CommentForm(post_id) {
       )
       .then(function (response) {
         console.log(response);
+
+        dispatch(setPost({ post: response.data }));
+
       })
       .catch(function (error) {
         console.log(error);
@@ -38,7 +41,7 @@ function CommentForm(post_id) {
         type="text"
         label="Add a Comment"
         variant="outlined"
-        id="commentText"
+        id={post_id.props}
       />
       <br />
       <Button
