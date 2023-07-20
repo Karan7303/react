@@ -44,20 +44,14 @@ export const likePost = async (req, res) => {
   res.status(200).json(updatedPost);
 };
 export const commentPost = async (req, res) => {
-  const postSelect = await Post.findOne({ _id: req.body.params.postID });
-  console.log(postSelect);
-  res.status(200).json(postSelect)
-  // const id = req.body.params.postID
-  // const post = await Post.findById(id);
-  // const like = post.likes.get(req.user.id);
+  // const postSelect = await Post.findOne({ _id: req.body.params.postID });
+  // console.log(postSelect);
+  // res.status(200).json(postSelect)
 
-  // if (like !== true) post.likes.set(req.user.id, true);
-  // else post.likes.delete(req.user.id);
+  const id = req.body.params.postID
+  const post = await Post.findById(id);
+  const text = req.body.params.commentText
 
-  // const updatedPost = await Post.findByIdAndUpdate(
-  //   id,
-  //   { likes: post.likes },
-  //   { new: true }
-  // );
-  // res.status(200).json(updatedPost);
+  post.comments.insertOne(req.user.id, text);
+  res.status(200).json(post);
 };

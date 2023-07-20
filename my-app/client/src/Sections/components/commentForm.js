@@ -8,12 +8,14 @@ function CommentForm(post_id) {
   const token = useSelector((state) => state.token);
 
   const updateComment = (id) => {
-    console.log(token);
+    var commentText = document.getElementById("commentText").textContent;
     axios
       .patch(
         "https://backend-z03p.onrender.com/post/comment/",
         {
-          params: { postID: id.props },
+          params: { postID: id.props,
+            commentText:commentText
+           },
         },
         {
           headers: {
