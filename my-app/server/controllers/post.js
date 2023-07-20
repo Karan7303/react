@@ -52,8 +52,10 @@ export const commentPost = async (req, res) => {
   const post = await Post.findById(id);
   const text = req.body.params.commentText
   const userId = req.user.id
-  const date = new Date().toLocaleTimeString('en-US');
-  post.comments.push({content: text,userId:userId,date:date});
+  const date1 = new Date().toLocaleTimeString('en-US');
+  const date12 = new Date().toDateString('en-US');
+
+  post.comments.push({content: text,userId:userId,date:date1+date12});
   const updatedPost = await Post.findByIdAndUpdate(
     id,
     { comments: post.comments },
