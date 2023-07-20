@@ -142,8 +142,8 @@ function HomePage_Post({ userID }) {
                     commentSectionshow=true;        }}>
                   <CommentIcon />
                  </Button>
-              </Stack>
-              <CommentSection/>
+              </Stack>{Object.keys(item.comments).length!==0&& <CommentSection props={item}/>}
+             
               <CommentForm props={item._id}/>               
             </Box>
           );

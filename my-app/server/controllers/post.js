@@ -52,7 +52,7 @@ export const commentPost = async (req, res) => {
   const post = await Post.findById(id);
   const text = req.body.params.commentText
   const userId = req.user.id
-  post.comments.push({userId: text});
+  post.comments.push({content: text,userId:userId});
   const updatedPost = await Post.findByIdAndUpdate(
     id,
     { comments: post.comments },
