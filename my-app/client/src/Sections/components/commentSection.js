@@ -54,7 +54,7 @@ function CommentSection(props) {
                 </h4>
                 <p style={{ textAlign: "left" }}>{item.content}</p>
                 <p style={{ textAlign: "left", color: "gray" }}>
-                  posted 1 minute ago
+                  {item.date}
                 </p>
               </Grid>
             </Grid>
