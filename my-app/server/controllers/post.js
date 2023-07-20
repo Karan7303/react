@@ -46,6 +46,7 @@ export const likePost = async (req, res) => {
 export const commentPost = async (req, res) => {
   const postSelect = await Post.findOne({ _id: req.params.id });
   console.log(postSelect);
+  res.status(200).json(postSelect)
   // const id = req.body.params.postID
   // const post = await Post.findById(id);
   // const like = post.likes.get(req.user.id);
