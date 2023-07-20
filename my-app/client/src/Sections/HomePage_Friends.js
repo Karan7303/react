@@ -23,7 +23,11 @@ function Friend_List({ friends }) {
         <Typography align="center"> User has no friends</Typography>
       ) : (
         friends.map((friend) => {
-          return <FriendListFriend friend={friend} />;
+          return (
+            <Box sx={{m:1}}>
+              <FriendListFriend friend={friend} />
+            </Box>
+          );
         })
       )}
     </Box>

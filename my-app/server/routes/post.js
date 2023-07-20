@@ -10,6 +10,7 @@ const router = express.Router();
 // router.post("userSidebar",verifytoken,userSidebar)
  router.get("/",verifytoken,getPost);
  router.patch("/id",verifytoken,likePost);
+ router.patch("/comment/:id",verifytoken,likePost)
 
 
 export default router;

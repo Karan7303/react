@@ -9,11 +9,14 @@ import { useEffect, useState } from "react";
 import ThumbUpAltIcon from "@mui/icons-material/ThumbUpAlt";
 import CommentIcon from "@mui/icons-material/Comment";
 import { useSelector, useDispatch } from "react-redux";
-import { setPosts, setPost, setLoginUser, setFriends } from "../state/slice";
+import { setPosts, setPost, setFriends } from "../state/slice";
+import CommentForm from "./components/commentForm";
+import CommentSection from "./components/commentSection"
 
 function HomePage_Post({ userID }) {
   const postData = useSelector((state) => state.posts);
   const token = useSelector((state) => state.token);
+  let commentSectionshow=false;
   const dispatch = useDispatch();
   useEffect(() => {
     axios
@@ -30,6 +33,8 @@ function HomePage_Post({ userID }) {
         console.log(error.response);
       });
   }, []);
+  
+  
   const updateLike = (p_id) => {
     axios
       .patch(
@@ -54,7 +59,7 @@ function HomePage_Post({ userID }) {
   const addOrremove = (friendId) => {
     axios
       .patch(
-        "https://backend-z03p.onrender.comcom/user/addOrRemove",
+        "https://backend-z03p.onrender.com/user/addOrRemove",
         {
           params: { friendId: friendId },
         },
@@ -133,10 +138,13 @@ function HomePage_Post({ userID }) {
                     <ThumbUpAltIcon color="" />
                   )}
                 </Button>
-                <Button color="secondary" variant="contained">
+                <Button color="secondary" variant="contained"  onClick={() => {
+                    commentSectionshow=true;        }}>
                   <CommentIcon />
-                </Button>
+                 </Button>
               </Stack>
+              <CommentSection/>
+              <CommentForm props={item._id}/>               
             </Box>
           );
         })}
