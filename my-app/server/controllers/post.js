@@ -28,6 +28,12 @@ export const getPost = async (req, res) => {
   const post = await Post.find();
   res.json({ post: post });
 };
+export const getuserPost = async (req, res) => {
+  //const post = await Post.findOne({ _id: req.user.id });
+  console.log(req.params);
+  const post = await Post.find({userId:req.params._id});
+  res.json({ post: post });
+};
 export const likePost = async (req, res) => {
   const id = req.body.params.postID
   const post = await Post.findById(id);
@@ -53,9 +59,9 @@ export const commentPost = async (req, res) => {
   const text = req.body.params.commentText
   const userId = req.user.id
   const date1 = new Date().toLocaleTimeString('en-US');
-  const date12 = new Date().toDateString('en-US');
+  const date12 = new Date().toDateString('en-US')+" ";
 
-  post.comments.push({content: text,userId:userId,date:date12+" "+date1});
+  post.comments.push({content: text,userId:userId,date:date12+date1});
   const updatedPost = await Post.findByIdAndUpdate(
     id,
     { comments: post.comments },

@@ -37,7 +37,7 @@ function CommentForm(post_id) {
   return (
     <form>
       <TextField
-        style={{ marginLeft: "46px", width: "550px", margin: "15px" }}
+        sx={{ml:6,mt:2,width:500}}
         type="text"
         label="Add a Comment"
         variant="outlined"
@@ -48,7 +48,7 @@ function CommentForm(post_id) {
         onClick={() => updateComment(post_id)}
         variant="contained"
         color="primary"
-        style={{ marginLeft: "46px" }}
+        sx={{ml:6,mt:.5}}
       >
         Comment
       </Button>

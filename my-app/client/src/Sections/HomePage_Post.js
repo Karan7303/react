@@ -11,12 +11,12 @@ import CommentIcon from "@mui/icons-material/Comment";
 import { useSelector, useDispatch } from "react-redux";
 import { setPosts, setPost, setFriends } from "../state/slice";
 import CommentForm from "./components/commentForm";
-import CommentSection from "./components/commentSection"
+import CommentSection from "./components/commentSection";
 
 function HomePage_Post({ userID }) {
   const postData = useSelector((state) => state.posts);
   const token = useSelector((state) => state.token);
-  let commentSectionshow=false;
+  const [commentSectionshow, setcommentSectionshow] = useState(false);
   const dispatch = useDispatch();
   useEffect(() => {
     axios
@@ -33,8 +33,7 @@ function HomePage_Post({ userID }) {
         console.log(error.response);
       });
   }, []);
-  
-  
+
   const updateLike = (p_id) => {
     axios
       .patch(
@@ -97,7 +96,10 @@ function HomePage_Post({ userID }) {
               <Stack direction={"row"} spacing={1}>
                 <Avatar
                   alt="Remy Sharp"
-                  src={"https://backend-z03p.onrender.com/assets/" + item.userPicturePath}
+                  src={
+                    "https://backend-z03p.onrender.com/assets/" +
+                    item.userPicturePath
+                  }
                   xm="5"
                 />
                 <Box sx={{ bgcolor: "" }} component={"span"}>
@@ -106,9 +108,11 @@ function HomePage_Post({ userID }) {
                   </Typography>
                 </Box>
                 {item.userId !== userID ? (
-                  <Button onClick={()=>{
-                    addOrremove(item.userId)
-                  }}>
+                  <Button
+                    onClick={() => {
+                      addOrremove(item.userId);
+                    }}
+                  >
                     <PersonAddIcon sx={{ ml: 42, pl: 20 }} />
                   </Button>
                 ) : null}
@@ -117,7 +121,10 @@ function HomePage_Post({ userID }) {
                 <Box
                   component="img"
                   sx={{ width: "500px", height: "500px", ml: 6 }}
-                  src={"https://backend-z03p.onrender.com/assets/" + item.picturePath}
+                  src={
+                    "https://backend-z03p.onrender.com/assets/" +
+                    item.picturePath
+                  }
                 ></Box>
               )}
               <Box id="userContent" sx={{ bgcolor: "aliceblue", ml: 6, mt: 2 }}>
@@ -131,22 +138,35 @@ function HomePage_Post({ userID }) {
                     updateLike(item._id);
                   }}
                 >
-                  <Typography variant="h5">{Object.keys(item.likes).length}</Typography>
+                  <Typography variant="h7">
+                    {Object.keys(item.likes).length}{" "}
+                  </Typography>
                   {item.likes[userID] ? (
                     <ThumbDownIcon />
                   ) : (
                     <ThumbUpAltIcon color="" />
                   )}
                 </Button>
-                <Button color="secondary" variant="contained"  onClick={() => {
-                    commentSectionshow=true;        }}>
+                <Button
+                  color="secondary"
+                  variant="contained"
+                  onClick={() => {
+                    setcommentSectionshow((commentSectionshow)?false:true)
+                    // if (commentSectionshow === true){
+                        
+                    //   setcommentSectionshow(false);}
+                    // else setcommentSectionshow(true);
+                  }}
+                >
+                  {Object.keys(item.comments).length}
                   <CommentIcon />
-                 </Button>
-              </Stack>{Object.keys(item.comments).length!==0&& <CommentSection props={item}/>}
-             
-              <CommentForm props={item._id}/>               
+                </Button>
+              </Stack>
+            
+              {commentSectionshow && <CommentSection props={item} />}
+              <CommentForm props={item._id} />
             </Box>
-          );
+          )
         })}
       </Box>
     )

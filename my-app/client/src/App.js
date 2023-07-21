@@ -5,6 +5,7 @@ import Login from "./Login";
 import Signup from "./Signup";
 import HomePage from "./Home_Page";
 import { useSelector } from "react-redux";
+import HomePageNotify from "./Sections/HomePage_Notify";
 
 function App() {
   let isLoggedIn = Boolean(useSelector(state => state.token));
@@ -14,6 +15,8 @@ function App() {
         <Route path="/" element={isLoggedIn ? <HomePage /> : <Login />} default />
         <Route path="Signup" element={<Signup />} />
         <Route path="Home" element={isLoggedIn ? <HomePage /> : <Login />} />
+        <Route path="userProfile" element={isLoggedIn ? <HomePageNotify /> : <Login />} />
+
       </Routes>
     </HashRouter>
   );

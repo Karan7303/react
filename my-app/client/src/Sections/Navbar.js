@@ -12,40 +12,34 @@ import Button from "@mui/material/Button";
 import Tooltip from "@mui/material/Tooltip";
 import MenuItem from "@mui/material/MenuItem";
 import AdbIcon from "@mui/icons-material/Adb";
+import LogoutIcon from "@mui/icons-material/Logout";
 import { useNavigate } from "react-router-dom";
-import { useDispatch } from "react-redux";
+import { useDispatch,useSelector } from "react-redux";
 import { setLogOut } from "../state/slice";
-
-const pages = ["Home", "My Profile", "Notifications"];
-const settings = ["Profile", "Account", "Dashboard", "Logout"];
+import { ListItemIcon, ListItemText, Stack } from "@mui/material";
+const pages = ["Home", "My Profile"];
 
 function Navbar() {
+  const loggedInUser = useSelector((state) => state.user);
+
   const navigate = useNavigate();
   const dispatch = useDispatch();
-  const [anchorElNav, setAnchorElNav] = React.useState(null);
-  const [anchorElUser, setAnchorElUser] = React.useState(null);
-
-  const handleOpenNavMenu = (event) => {
-    setAnchorElNav(event.currentTarget);
-  };
-  const handleOpenUserMenu = (event) => {
-    setAnchorElUser(event.currentTarget);
-  };
-
-  const handleCloseNavMenu = () => {
-    setAnchorElNav(null);
-    //navigate("/" + page);
-    navigate("/Post");
-  };
-
-  const handleCloseUserMenu = (event) => {
-    setAnchorElUser(null);
+  const handleClick = (event) => {
+    switch (event) {
+      case "Home":
+        navigate("/home");
+        break;
+      case "My Profile":
+        navigate("/userProfile",{state:{userId:loggedInUser}});
+        break;
+      default:
+        navigate("/home");
+        break;
+    }
   };
   const logOut = (event) => {
     //dispatch(setLogOut())
-    event.currentTarget.textContent === "Logout"
-      ? dispatch(setLogOut())
-      : handleCloseUserMenu();
+    if (event.currentTarget.textContent === "Logout") dispatch(setLogOut());
   };
   return (
     <AppBar position="static">
@@ -67,7 +61,7 @@ function Navbar() {
               textDecoration: "none",
             }}
           >
-            LOGO
+            Social Media App
           </Typography>
 
           <Box sx={{ flexGrow: 1, display: { xs: "flex", md: "none" } }}>
@@ -76,32 +70,16 @@ function Navbar() {
               aria-label="account of current user"
               aria-controls="menu-appbar"
               aria-haspopup="true"
-              onClick={handleOpenNavMenu}
               color="inherit"
             >
               <MenuIcon />
             </IconButton>
-            <Menu
-              id="menu-appbar"
-              anchorEl={anchorElNav}
-              anchorOrigin={{
-                vertical: "bottom",
-                horizontal: "left",
-              }}
-              keepMounted
-              transformOrigin={{
-                vertical: "top",
-                horizontal: "left",
-              }}
-              open={Boolean(anchorElNav)}
-              onClose={handleCloseNavMenu}
-              sx={{
-                display: { xs: "block", md: "none" },
-              }}
-            >
+            <Menu>
               {pages.map((page) => (
-                <MenuItem key={page} onClick={() => handleCloseNavMenu()}>
-                  <Typography textAlign="center">{page}</Typography>
+                <MenuItem key={page}>
+                  <Typography textAlign="center" sx={{ bgcolor: "whitesmoke" }}>
+                    {page}
+                  </Typography>
                 </MenuItem>
               ))}
             </Menu>
@@ -128,46 +106,17 @@ function Navbar() {
           <Box sx={{ flexGrow: 1, display: { xs: "none", md: "flex" } }}>
             {pages.map((page) => (
               <Button
+                onClick={() => handleClick(page)}
                 key={page}
-                onClick={handleCloseNavMenu}
-                sx={{ my: 2, color: "white", display: "block" }}
+                sx={{ ml: 15, my: 2, color: "white", display: "block" }}
               >
                 {page}
               </Button>
             ))}
           </Box>
-
-          <Box sx={{ flexGrow: 0 }}>
-            <Tooltip title="Open settings">
-              <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
-                <Avatar alt="Remy Sharp" src="/static/images/avatar/2.jpg" />
-              </IconButton>
-            </Tooltip>
-            <Menu
-              sx={{ mt: "45px" }}
-              id="menu-appbar"
-              anchorEl={anchorElUser}
-              anchorOrigin={{
-                vertical: "top",
-                horizontal: "right",
-              }}
-              keepMounted
-              transformOrigin={{
-                vertical: "top",
-                horizontal: "right",
-              }}
-              open={Boolean(anchorElUser)}
-              onClose={handleCloseUserMenu}
-            >
-              {settings.map((setting) => (
-                <MenuItem key={setting}>
-                  <Typography textAlign="center" onClick={logOut}>
-                    {setting}
-                  </Typography>
-                </MenuItem>
-              ))}
-            </Menu>
-          </Box>
+          <Button onClick={logOut} variant="contained" endIcon={<LogoutIcon />}>
+            Logout
+          </Button>
         </Toolbar>
       </Container>
     </AppBar>
