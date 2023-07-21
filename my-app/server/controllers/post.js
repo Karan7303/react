@@ -30,7 +30,7 @@ export const getPost = async (req, res) => {
 };
 export const getuserPost = async (req, res) => {
   //const post = await Post.findOne({ _id: req.user.id });
-  console.log(req.params._id);
+  console.log(req.params);
   const post = await Post.find({userId:req.params._id});
   res.json({ post: post,id:req.params._id });
 };
