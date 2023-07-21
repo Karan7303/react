@@ -29,7 +29,7 @@ const HomePageNotify = () => {
 
     if (loggedInUser._id !== userId._id) {
       axios
-        .get("https://backend-z03p.onrender.com/user/" + userId._id, {
+        .get(process.env.REACT_APP_URL+"/user/" + userId._id, {
           headers: {
             Authorization: "Bearer " + token,
           },
@@ -38,13 +38,13 @@ const HomePageNotify = () => {
           setData(response.data.user);
         })
         .catch(function (error) {
-          console.log(error.response);
+          console.log("user"+error.response);
         });
     } else setData(loggedInUser);
 
     axios
       .get(
-        "https://backend-z03p.onrender.com/post/id",
+        process.env.REACT_APP_URL+"/post/id",
 
         {
           headers: {
@@ -61,7 +61,7 @@ const HomePageNotify = () => {
         setuserPosts({ posts: data });
       })
       .catch(function (error) {
-        console.log(error.response);
+        console.log("post/id"+error);
       });
   }, []);
   return (
@@ -90,7 +90,7 @@ const HomePageNotify = () => {
                   alt="Remy Sharp"
                   id="profileP"
                   src={
-                    "https://backend-z03p.onrender.com/assets/" + Data.picture
+                    process.env.REACT_APP_URL+"/assets/" + Data.picture
                   }
                   sx={{ margin: 2, height: 120, width: 120 }}
                 />
@@ -160,7 +160,7 @@ const HomePageNotify = () => {
                     <Avatar
                       alt="Remy Sharp"
                       src={
-                        "https://backend-z03p.onrender.com/assets/" +
+                        process.env.REACT_APP_URL+"/assets/" +
                         item.userPicturePath
                       }
                       xm="5"
@@ -176,7 +176,7 @@ const HomePageNotify = () => {
                       component="img"
                       sx={{ width: "500px", height: "500px", ml: 6 }}
                       src={
-                        "https://backend-z03p.onrender.com/assets/" +
+                        process.env.REACT_APP_URL+"/assets/" +
                         item.picturePath
                       }
                     ></Box>

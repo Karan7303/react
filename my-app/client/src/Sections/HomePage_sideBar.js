@@ -18,7 +18,7 @@ function HomePage_sidebar() {
   // useEffect(() => {
   //   //axios.get('user/:'+sessionStorage.getItem('Authorization'))
   //   axios
-  //     .get("https://backend-z03p.onrender.com/user/id", {
+  //     .get(process.env.REACT_APP_URL+"/user/id", {
   //       headers: {
   //         Authorization: "Bearer " + token,
   //       },
@@ -48,7 +48,7 @@ function HomePage_sidebar() {
           <Avatar
             alt="Remy Sharp"
             id="profileP"
-            src={"https://backend-z03p.onrender.com/assets/" + loggedInUser.picture}
+            src={process.env.REACT_APP_URL+"/assets/" + loggedInUser.picture}
             sx={{ margin: 2, height: 120, width: 120 }}
           />
         </Box>

@@ -20,7 +20,7 @@ function HomePage_Post({ userID }) {
   const dispatch = useDispatch();
   useEffect(() => {
     axios
-      .get("https://backend-z03p.onrender.com/post", {
+      .get(process.env.REACT_APP_URL+"/post", {
         headers: {
           Authorization: "Bearer " + token,
         },
@@ -37,7 +37,7 @@ function HomePage_Post({ userID }) {
   const updateLike = (p_id) => {
     axios
       .patch(
-        "https://backend-z03p.onrender.com/post/id",
+        process.env.REACT_APP_URL+"/post/id",
         {
           params: { postID: p_id },
         },
@@ -58,7 +58,7 @@ function HomePage_Post({ userID }) {
   const addOrremove = (friendId) => {
     axios
       .patch(
-        "https://backend-z03p.onrender.com/user/addOrRemove",
+        process.env.REACT_APP_URL+"/user/addOrRemove",
         {
           params: { friendId: friendId },
         },
@@ -97,7 +97,7 @@ function HomePage_Post({ userID }) {
                 <Avatar
                   alt="Remy Sharp"
                   src={
-                    "https://backend-z03p.onrender.com/assets/" +
+                    process.env.REACT_APP_URL+"/assets/" +
                     item.userPicturePath
                   }
                   xm="5"
@@ -122,7 +122,7 @@ function HomePage_Post({ userID }) {
                   component="img"
                   sx={{ width: "500px", height: "500px", ml: 6 }}
                   src={
-                    "https://backend-z03p.onrender.com/assets/" +
+                    process.env.REACT_APP_URL+"/assets/" +
                     item.picturePath
                   }
                 ></Box>

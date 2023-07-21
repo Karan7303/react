@@ -12,7 +12,7 @@ function CommentForm(post_id) {
     var commentText = document.getElementById(post_id.props).value;
     axios
       .patch(
-        "https://backend-z03p.onrender.com/post/comment/",
+        process.env.REACT_APP_URL+"/post/comment/",
         {
           params: { postID: id.props,
             commentText:commentText

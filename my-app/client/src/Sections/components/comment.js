@@ -14,7 +14,7 @@ function Comment(props) {
   // var listedUser = null;
   useEffect(() => {
      axios
-      .get("https://backend-z03p.onrender.com/user/" + props.props.userId, {
+      .get(process.env.REACT_APP_URL+"/user/" + props.props.userId, {
         headers: {
           Authorization: "Bearer " + token,
         },
@@ -43,7 +43,7 @@ function Comment(props) {
                   <Avatar
                     alt="Remy Sharp"
                     src={
-                      "https://backend-z03p.onrender.com/assets/" +
+                      process.env.REACT_APP_URL+"/assets/" +
                       listedUser.picture
                     }
                   />

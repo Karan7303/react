@@ -16,7 +16,7 @@ function HomePage_Form() {
     
     axios
       .post(
-        "https://backend-z03p.onrender.com/post",
+        process.env.REACT_APP_URL+"/post",
         {
           userContent: text,
           picturePath: pictureName === "" ? null : pictureName,
