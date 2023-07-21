@@ -30,9 +30,9 @@ export const getPost = async (req, res) => {
 };
 export const getuserPost = async (req, res) => {
   //const post = await Post.findOne({ _id: req.user.id });
-  console.log(req.body.params);
+  console.log(req.query);
   const post = await Post.find({userId:req.params._id});
-  res.json({ post: post,id:req.params._id });
+  res.json({ post: post,id:req });
 };
 export const likePost = async (req, res) => {
   const id = req.body.params.postID
