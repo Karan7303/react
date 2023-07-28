@@ -1,95 +1,46 @@
 import { Box, List, ListItem, Stack } from "@mui/material";
-import ListItemIcon from "@mui/material/ListItemIcon";
 import IconButton from "@mui/material/IconButton";
 import Paper from "@mui/material/Paper";
 import { Avatar } from "@mui/material";
 import Divider from "@mui/material/Divider";
-import { alignProperty } from "@mui/material/styles/cssUtils";
-import { useEffect, useState } from "react";
-import { useNavigate } from "react-router-dom";
-import { useSelector, useDispatch } from "react-redux";
 
-import axios from "axios";
+import * as React from "react";
+import Card from "@mui/material/Card";
+import CardActions from "@mui/material/CardActions";
+import CardContent from "@mui/material/CardContent";
+import CardMedia from "@mui/material/CardMedia";
+import Button from "@mui/material/Button";
+import Typography from "@mui/material/Typography";
 
-function HomePage_sidebar() {
-  const loggedInUser = useSelector((state) => state.user);
+import { useSelector } from "react-redux";
 
-  // const [Data, setData] = useState(null);
-  // useEffect(() => {
-  //   //axios.get('user/:'+sessionStorage.getItem('Authorization'))
-  //   axios
-  //     .get(process.env.REACT_APP_URL+"/user/id", {
-  //       headers: {
-  //         Authorization: "Bearer " + token,
-  //       },
-  //     })
-  //     .then(function (response) {
-  //       setData(response.data.user);
-
-  //     });
-  // }, []);
+function HomePage_sidebar(loggedInUser) {
+  const page = (window.location.href.split('/')[4]);
+  //const loggedInUser = useSelector((state) => state.user);
   return (
     loggedInUser !== null && (
-      <Box
-        sx={{
-          bgcolor: "lightblue",
-          minwidth: 300,
-          height: 300,
-          margin: 1,
-        }}
-      >
-        <Box
-          component={"span"}
-          display="flex"
-          justifyContent="center"
-          alignItems="center"
-        >
-          {" "}
-          <Avatar
-            alt="Remy Sharp"
-            id="profileP"
-            src={process.env.REACT_APP_URL+"/assets/" + loggedInUser.picture}
-            sx={{ margin: 2, height: 120, width: 120 }}
-          />
-        </Box>
-        <Paper elevation={24} sx={{ margin: 2 }}>
-          {" "}
-          <List>
-            {" "}
-            <ListItem
-              secondaryAction={
-                <IconButton edge="end" aria-label="delete" id="Username">
-                  {loggedInUser.firstName}
-                </IconButton>
-              }
-            >
-              Name
-            </ListItem>
-            <Divider />
-            <ListItem
-              secondaryAction={
-                <IconButton edge="end" aria-label="delete" id="userEmail">
-                  {loggedInUser.email}
-                </IconButton>
-              }
-            >
-              Email
-            </ListItem>
-            <Divider />
-            <ListItem
-              secondaryAction={
-                <IconButton edge="end" aria-label="delete">
-                  3
-                </IconButton>
-              }
-            >
-              Recent Post{" "}
-            </ListItem>
-            <Divider />
-          </List>
-        </Paper>
-      </Box>
+        <Card sx={{ Width: "100%",m:2 }}>
+        <CardMedia
+          component="img"
+          alt="green iguana"
+          height="300"
+          image={process.env.REACT_APP_URL + "/assets/" + loggedInUser.picture}
+        />
+        <CardContent>
+          <Typography gutterBottom variant="h5" component="div">
+          {loggedInUser.firstName} {loggedInUser.lastName}        
+           </Typography>
+          <Typography variant="body2" color="text.secondary">
+            {loggedInUser.bio}
+          </Typography>
+        </CardContent>
+        <CardActions>
+          <Button size="small">Share</Button>
+          <Button size="small">Learn More</Button>
+        </CardActions>
+      </Card>
     )
   );
 }
+
 export default HomePage_sidebar;

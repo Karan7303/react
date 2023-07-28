@@ -7,16 +7,13 @@ import Typography from "@mui/material/Typography";
 import Menu from "@mui/material/Menu";
 import MenuIcon from "@mui/icons-material/Menu";
 import Container from "@mui/material/Container";
-import Avatar from "@mui/material/Avatar";
 import Button from "@mui/material/Button";
-import Tooltip from "@mui/material/Tooltip";
 import MenuItem from "@mui/material/MenuItem";
 import AdbIcon from "@mui/icons-material/Adb";
 import LogoutIcon from "@mui/icons-material/Logout";
 import { useNavigate } from "react-router-dom";
-import { useDispatch,useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { setLogOut } from "../state/slice";
-import { ListItemIcon, ListItemText, Stack } from "@mui/material";
 const pages = ["Home", "My Profile"];
 
 function Navbar() {
@@ -30,7 +27,10 @@ function Navbar() {
         navigate("/home");
         break;
       case "My Profile":
-        navigate("/userProfile",{state:{userId:loggedInUser}});
+        navigate("/userProfile", { state: { userId: loggedInUser } });
+        break;
+      case "Admin":
+        navigate("/Admin");
         break;
       default:
         navigate("/home");
@@ -42,7 +42,7 @@ function Navbar() {
     if (event.currentTarget.textContent === "Logout") dispatch(setLogOut());
   };
   return (
-    <AppBar position="static">
+    <AppBar position="static" >
       <Container maxWidth="xl">
         <Toolbar disableGutters>
           <AdbIcon sx={{ display: { xs: "none", md: "flex" }, mr: 1 }} />
@@ -113,6 +113,15 @@ function Navbar() {
                 {page}
               </Button>
             ))}
+            {loggedInUser.isAdmin === true && (
+              <Button
+                onClick={() => handleClick("Admin")}
+                key={"Admin"}
+                sx={{ ml: 15, my: 2, color: "white", display: "block" }}
+              >
+                {"Admin"}
+              </Button>
+            )}
           </Box>
           <Button onClick={logOut} variant="contained" endIcon={<LogoutIcon />}>
             Logout

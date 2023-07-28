@@ -9,12 +9,13 @@ function CommentForm(post_id) {
   const token = useSelector((state) => state.token);
   const dispatch = useDispatch();
   const updateComment = (id) => {
-    var commentText = document.getElementById(post_id.props).value;
+    var commentText = document.getElementById(post_id._id).value;
+    document.getElementById(post_id._id).innerHTML=""
     axios
       .patch(
         process.env.REACT_APP_URL+"/post/comment/",
         {
-          params: { postID: id.props,
+          params: { postID: id._id,
             commentText:commentText
            },
         },
@@ -27,8 +28,8 @@ function CommentForm(post_id) {
       .then(function (response) {
         console.log(response);
 
-        dispatch(setPost({ post: response.data }));
-
+        //dispatch(setPost({ post: response.data }));
+        post_id.setuserPost(response.data)
       })
       .catch(function (error) {
         console.log(error);
@@ -41,7 +42,7 @@ function CommentForm(post_id) {
         type="text"
         label="Add a Comment"
         variant="outlined"
-        id={post_id.props}
+        id={post_id._id}
       />
       <br />
       <Button

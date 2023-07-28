@@ -9,7 +9,7 @@ const router = express.Router();
  //router.post("/userPosts",verifytoken,userPosts)
 // router.post("userSidebar",verifytoken,userSidebar)
  router.get("/",verifytoken,getPost);
- router.get("/id",verifytoken,getuserPost);
+ router.get("/postId",verifytoken,getuserPost);
  router.patch("/id",verifytoken,likePost);
  router.patch("/comment/",verifytoken,commentPost)
 

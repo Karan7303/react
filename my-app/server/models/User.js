@@ -34,6 +34,11 @@ const UserSchema = new mongoose.Schema(
         type: Date,
         require: true,
       },
+      Bio:{
+        type:String,
+        min:2,
+        max:200
+      },
       friends: {
         type: Array,
         default:[],

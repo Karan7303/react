@@ -25,13 +25,15 @@ export const createPost = async (req, res) => {
 };
 export const getPost = async (req, res) => {
   //const post = await Post.findOne({ _id: req.user.id });
-  const post = await Post.find();
+  const sort ={_id:-1}
+  const query={}
+  const post = await Post.find(query).sort(sort)
   res.json({ post: post });
 };
 export const getuserPost = async (req, res) => {
   //const post = await Post.findOne({ _id: req.user.id });
-  console.log("works"+req);
-  const post = await Post.find({userId:req.params._id});
+  console.log(req.query._id);
+  const post = await Post.find({userId:req.query._id});
   res.json({ post: post});
 };
 export const likePost = async (req, res) => {

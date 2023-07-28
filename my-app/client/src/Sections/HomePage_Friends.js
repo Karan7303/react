@@ -1,14 +1,10 @@
-import { Box, Stack, Avatar, Typography } from "@mui/material";
-import { useEffect } from "react";
-import axios from "axios";
-import { useSelector, useDispatch } from "react-redux";
-import { setFriends, setLoginUser } from "../state/slice";
+import { Box,Typography } from "@mui/material";
 import FriendListFriend from "./components/friendListFriend";
 function Friend_List({ friends }) {
   return (
     <Box
       sx={{
-        bgcolor: "",
+        bgcolor: "aliceblue",
         border: "solid 0.1em",
         minwidth: 300,
         height: 300,
@@ -16,7 +12,7 @@ function Friend_List({ friends }) {
         p: 2,
       }}
     >
-      <Typography align="center" variant="h4">
+      <Typography align="center" variant="h4" fontFamily={"cursive"}>
         Friends List{" "}
       </Typography>
       {friends.length === 0 ? (
@@ -24,7 +20,7 @@ function Friend_List({ friends }) {
       ) : (
         friends.map((friend) => {
           return (
-            <Box sx={{m:1}}>
+            <Box sx={{ m: 1 }}>
               <FriendListFriend friend={friend} />
             </Box>
           );
